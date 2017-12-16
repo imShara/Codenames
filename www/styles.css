@@ -1,0 +1,286 @@
+/*
+red:    bg-#FEEEE5 border-#EABEB6 text-#DB7D6D
+yellow: bg-#FFFFEA border-#E6DAA7 text-#D4A04E
+blue:   bg-#ECF8FF border-#C2DDEE text-#6497C7
+gray:   bg-#FFFFFF border-#D6D5D5 text-#191919
+violet: bg-#FFF2FF border-#EED0EF text-#C77BBB
+green:  bg-#EFFDEF border-#C1DBAC text-#7BA385
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  background: #F7F7F7;
+  overflow: hidden;
+}
+
+body {
+  height: 100%;
+  background: #F7F7F7;
+  color: #191919;
+  font-size: 12px;
+  overflow: hidden;
+}
+
+#field {
+  margin: 5px;
+  overflow: hidden;
+  height: calc(100% - 10px);
+  width: calc(100% - 60px);
+}
+
+.cell {
+  width: 33.333%;
+  height: 12.5%;
+  float: left;
+}
+
+.card {
+  background: #FFFFFF;
+  height: calc(100% - 10px);
+  margin: 5px;
+  box-sizing: border-box;
+  border: 0.8px solid #D6D5D5;
+  text-transform: uppercase;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 250ms ease-out;
+  font-weight: 700;
+}
+
+#buttonbar {
+  width: 50px;
+  height: 100%;
+  background: #eee;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column;
+}
+
+
+#buttonbar::before, 
+#buttonbar::after {
+  content:'';
+  display:block;
+  width:0;
+  height:0;
+  overflow:hidden;
+}
+
+
+#buttonbar button {
+  width: 50px;
+  height: 50px;
+  border: none;
+  font-size: 24px;
+  background: none;
+  color: #666666;
+  font-family: monospace;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+}
+
+#full {
+  width: 50px;
+  height: 50px;
+  //position: absolute;
+  //top: 0;
+  //left: 40px;
+}
+
+#full svg {
+  width: 24px;
+  height: 24px;
+  margin: 13px;
+}
+
+#hint {
+  width: 50px;
+  height: 50px;
+  //position: absolute;
+  //top: 0;
+  //right: 40px;
+}
+
+#hint svg {
+  width: 24px;
+  height: 24px;
+  margin: 13px;
+}
+
+
+.red,
+.hint .opened.red {
+  background-color: #FEEEE5;
+  border-color: #EABEB6;
+  color: #DB7D6D;
+}
+
+.hint .red {
+  background-color: #DB7D6D;
+  border-color: #DB7D6D;
+  color: #FFFFFF;
+}
+
+.blue,
+.hint .opened.blue {
+  background-color: #ECF8FF;
+  border-color: #C2DDEE;
+  color: #6497C7;
+}
+
+.hint .blue {
+  background-color: #6497C7;
+  border-color: #6497C7;
+  color: #FFFFFF;
+}
+
+.neutral,
+.hint .opened.neutral {
+  background-color: #EFFDEF;
+  border-color: #C1DBAC;
+  color: #7BA385;
+}
+
+.hint .neutral {
+  background-color: #7BA385;
+  border-color: #7BA385;
+  color: #FFFFFF;
+}
+
+.fatal {
+  background-color: #1E1D1f;
+  border-color: #000000;
+  color: #FFFFFF;
+}
+
+.selected {
+  background: #FFF2FF;
+  border-color: #EED0EF;
+  color: #C77BBB;
+  transition: all 600ms ease-out;
+  box-shadow: 0 1px 3px rgba(30, 29, 31, .15);
+}
+
+
+#turn {
+  background: #FFFFFF;
+  border: 1px solid #D6D5D5;
+  box-sizing: border-box;
+  border-radius: 20px;
+  position: relative;
+  //top: 0;
+  //left: 50%;
+  //margin-left: -40px;
+  width: 40px;
+  height: 80px;
+  margin: 0 5px;
+}
+
+.switch {
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 2px;
+  transition: all 200ms ease-out;
+}
+
+.team1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 38px;
+  height: 38px;
+  line-height: 37px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 200ms ease-out;
+}
+
+.team2 {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #D6D5D5;
+  width: 38px;
+  height: 38px;
+  line-height: 37px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 200ms ease-out;
+}
+
+.current0 .switch {
+  background: #DB7D6D;
+  left: 0;
+  top: 0;
+}
+
+.current1 .switch {
+  background: #6497C7;
+  top: 40px;
+  left: 0;
+}
+
+.current1 .team2,
+.current0 .team1 {
+  color: #FFFFFF;
+}
+
+.current1 .team1,
+.current0 .team2 {
+  color: #D6D5D5; 
+}
+
+@media screen and (max-width: 360px) {
+  .cell {
+    width: 50%;
+    height: 8.333%;
+  }
+  
+  #field {
+    width: auto;
+    height: calc(100% - 60px);
+  }
+
+  #buttonbar {
+    width: 100%;
+    height: 50px;
+    background: #eee;
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    flex-flow: row;
+  }
+
+  #turn {
+    width: 80px;
+    height: 40px;
+    margin: 5px 0;
+  }
+
+  .current1 .switch {
+    left: 40px;
+    top: 0;
+  }
+}
